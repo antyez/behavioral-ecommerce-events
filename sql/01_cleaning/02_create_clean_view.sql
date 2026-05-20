@@ -13,11 +13,16 @@ CREATE VIEW events AS (
         category_code, 
         brand,
         price,
-        user_id,
+        user_id, -- null valid since might be guest traffic
         user_session
     FROM ecommerce_events
     -- Removes corrupted records which are not useful for the analysis.
-    WHERE user_session IS NOT NULL 
+    WHERE 
+        event_time IS NOT NULL
+        AND event_type IS NOT NULL
+        AND product_id IS NOT NULL
+        AND user_session IS NOT NULL
+        AND NULLIF(TRIM(SPLIT_PART(category_code, '.', 1)), '') IS NOT NULL
 )
 
 -- NOTE: user_sessions might have UUIDs or different formats, however, they are all valid for this analysis.
