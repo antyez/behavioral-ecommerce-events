@@ -3,7 +3,7 @@
 
 SET search_path TO ecommerce_events;
 
-CREATE VIEW v_session_conversion_funnel AS (   
+CREATE VIEW v_session_conversion_summary AS (   
 
 WITH funnel_counts AS (
 	SELECT
@@ -30,8 +30,8 @@ SELECT
 	ROUND((total_purchases::NUMERIC / total_views) * 100, 2) AS view_to_purchase_rate
 
 FROM
-	funnel_counts;
-)
+	funnel_counts
+);
 
--- Conclusion: 'view jail' hypothesis confirmed, out of all the views, only 8% of products were added to a cart and only 5% of the views were a purchase.
--- Acceptable cart to purchase rate = 59%, acceptable checkout efficiency by increasing views to cart rate might be the best way to increase purchases.
+-- Conclusion: 'view jail' hypothesis confirmed, out of all the views, only 10% of products were added to a cart and only 6% of the views were a purchase.
+-- Acceptable cart to purchase rate = 58%, acceptable checkout efficiency by increasing views to cart rate might be the best way to increase purchases.
